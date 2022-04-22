@@ -1,0 +1,13 @@
+<p>----------------请先假装这里有一个导航bar----------------
+    {% if user.is_authenticated %}
+        你好，{{ user.username }}。
+        <a href="{% url 'users:logout' %}">注销</a>
+    {% else %}
+    <a href="{% url 'Userinfo:login' %}">请登录</a>
+    {% endif %}
+    -<a href="{% url 'Userinfo:register' %}">注册</a>
+</p>
+
+{% block content %}
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends "system/base.html" %}
+
+{% block content %}
+    <form method="post" action="{% url 'Userinfo:login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button name="submit">登录</button>
+        <input type="hidden" name="next" value="{% url 'system:home' %}"/>
+    </form>
+
+{% endblock content %}

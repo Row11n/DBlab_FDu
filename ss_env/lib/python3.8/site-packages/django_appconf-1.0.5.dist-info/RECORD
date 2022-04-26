@@ -1,0 +1,13 @@
+appconf/__init__.py,sha256=p64zj_ZRA4ZSZZugzVRyL-XQ0dABeY8-XSO9xOSed3s,57
+appconf/__pycache__/__init__.cpython-38.pyc,,
+appconf/__pycache__/base.cpython-38.pyc,,
+appconf/__pycache__/utils.cpython-38.pyc,,
+appconf/base.py,sha256=OXbq5lZZIjqO2WwRiAuyyhcTy-shBvc4zZQebtp5Fs0,5181
+appconf/utils.py,sha256=rB1FHTV3WzZbkC0CHiooC8tTlydAiolxgQFVnTZLwt4,861
+django_appconf-1.0.5.dist-info/AUTHORS,sha256=KgKdSgPfLMSqMUqQc3RNn_h-dTnlNt4VdrzFycfQQ_M,91
+django_appconf-1.0.5.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+django_appconf-1.0.5.dist-info/LICENSE,sha256=6qakda-uSYdYv8og71A0zIQpji4p3VKUE7PwdzCgmvE,1549
+django_appconf-1.0.5.dist-info/METADATA,sha256=iGPVFNBS7el6PR5-qNl2YMV3I1pyMdJEkhrWvZhRcJ0,5251
+django_appconf-1.0.5.dist-info/RECORD,,
+django_appconf-1.0.5.dist-info/WHEEL,sha256=ewwEueio1C2XeHTvT17n8dZUJgOvyCWCt0WVNLClP9o,92
+django_appconf-1.0.5.dist-info/top_level.txt,sha256=bLxw3ktn3j66DebFZ7hmrFEcUZSJzHz_cnhL16WnN7k,8

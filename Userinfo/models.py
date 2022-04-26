@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
 from django.db import models
+from datetime import date
+
 
 class UserManager(BaseUserManager):
     def _create_user(self,username,password,email,uid,**kwargs):
@@ -31,11 +33,11 @@ class User(AbstractBaseUser,PermissionsMixin): # 继承AbstractBaseUser，Permis
     uid = models.CharField(max_length=10,primary_key=True,verbose_name="工号")
     username = models.CharField(max_length=15,verbose_name="用户名",unique=True)
     nickname = models.CharField(max_length=13,verbose_name="昵称",null=True,blank=True)
-    age = models.IntegerField(verbose_name="年龄",null=True,blank=True)
     gender = models.CharField(max_length=2,choices=GENDER_TYPE,verbose_name="性别",null=True,blank=True)
     phone = models.CharField(max_length=11,null=True,blank=True,verbose_name="手机号码")
     email = models.EmailField(verbose_name="邮箱")
-    picture = models.ImageField(upload_to="Store/user_picture",verbose_name="用户头像",null=True,blank=True)
+    avatar = models.ImageField(upload_to='avatar',default='avatar/default.jpg',verbose_name='头像',)
+    birthday = models.DateField(verbose_name="出生年月",default='2010-01-01')
     is_active = models.BooleanField(default=True,verbose_name="激活状态")
     is_staff = models.BooleanField(default=True,verbose_name="是否是员工")
     USERNAME_FIELD = 'username'
@@ -46,6 +48,14 @@ class User(AbstractBaseUser,PermissionsMixin): # 继承AbstractBaseUser，Permis
         return self.username
     def get_short_name(self):
         return self.username
+        
+    @property
+    def 年龄(self):
+        delta_days = date.today() - self.birthday
+        class Meta:
+            verbose_name = "年龄"
+        return int(delta_days.days / 365)
+
     class Meta:
         verbose_name = "用户"
         verbose_name_plural = verbose_name

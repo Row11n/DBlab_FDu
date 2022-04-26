@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'system',
     'users',
     'Userinfo',
+    'imagekit',
 
 
     #默认app
@@ -132,6 +133,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Userinfo.User'
+
+STATIC_URL = 'static/'
+
+import os
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
 
 import django_heroku
 django_heroku.settings(locals())

@@ -2,9 +2,13 @@ asgiref==3.5.0
 backports.zoneinfo==0.2.1
 dj-database-url==0.5.0
 Django==4.0.4
+django-appconf==1.0.5
 django-heroku==0.3.1
+django-imagekit==4.1.0
 gunicorn==20.1.0
+pilkit==2.0
 Pillow==9.1.0
 psycopg2==2.9.3
+six==1.16.0
 sqlparse==0.4.2
 whitenoise==6.0.0

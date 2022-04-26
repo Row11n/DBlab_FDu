@@ -19,14 +19,18 @@ def register(request):
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password1"]
             email = form.cleaned_data["email"]
+            uid = form.cleaned_data["uid"]
             username_exists = User.objects.filter(username=username).exists()
             if username_exists:
-             return JsonResponse({"code":400,"message":"验证失败","data":{"username":"您输入的用户名已存在!","password1":"","password2":"","email":""}})
+             return JsonResponse({"code":400,"message":"验证失败","data":{"username":"您输入的用户名已存在!","password1":"","password2":"","email":"","uid":""}})
             email_exists = User.objects.filter(email=email).exists()
             if email_exists:
-                return JsonResponse({"code": 400, "message":"验证失败","data":{"username": "","password1":"","password2":"", "email": "您输入的邮箱已存在！"}})
-            User.objects.create_user(username=username,password=password,email=email)
-            return JsonResponse({"code": 200,"message":"验证通过", "data":{"username": "","password1":"","password2":"", "email": ""}})
+                return JsonResponse({"code": 400, "message":"验证失败","data":{"username": "","password1":"","password2":"", "email": "您输入的邮箱已存在！","uid":""}})
+            uid_exists = User.objects.filter(uid=uid).exists()
+            if email_exists:
+                return JsonResponse({"code": 400, "message":"验证失败","data":{"username": "","password1":"","password2":"", "email": "","uid":"工号重复"}})
+            User.objects.create_user(username=username,password=password,email=email,uid=uid)
+            return JsonResponse({"code": 200,"message":"验证通过", "data":{"username": "","password1":"","password2":"", "email": "","uid":""}})
         else:
             return JsonResponse({"code":400,"message":"验证失败","data":{"username":form.errors.get("username"),"password1":form.errors.get("password1"),"password2":form.errors.get("password2"),"email":form.errors.get("email")}})
 

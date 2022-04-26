@@ -29,6 +29,15 @@ class RegisterForm(Form):
             "required":"邮箱不可以为空！"
         },
     )
+    uid = fields.CharField(
+        max_length=10,
+        min_length=10,
+        error_messages={
+            "min_length": "工号必须为10位！",
+            "max_length": "工号必须为10位！"
+        }
+    )
+
     def clean_password2(self):
         if not self.errors.get("password1"):
             if self.cleaned_data["password2"] != self.cleaned_data["password1"]:

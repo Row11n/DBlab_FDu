@@ -11,14 +11,14 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light mb-4 border" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="{% url 'system:home' %}">BSMS</a>
+    <nav class="navbar navbar-expand-md navbar-light mb-4 border" style="background-color: #99AFC6;">
+        <a class="navbar-brand" style="color: #0F0B0C;font-weight: bolder;font-family: Conolas;" href="{% url 'system:home' %}">BSMS</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse"  aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span></button>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse" style="color: #86A4BE;" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'system:home' %}">主页</a>
@@ -29,14 +29,14 @@
             </ul>
         </div>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse"> 
+        <div class="collapse navbar-collapse" style="color: #86A4BE;" id="navbarCollapse"> 
             <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <img class="mb border" src = "{{user.avatar.url}}" alt="{{user.username}}" style="width:50px"></img>
+                    <img class="mb border" src = "{{user.avatar.url}}" alt="{{user.username}}" style="width:40px; height: 40px;"></img>
                 </li>
                 <li class="nav-item">
-                    <span class="navbar-brand"> &emsp;你好，{{ user.username }}.</span>
+                    <span class="navbar-brand" style="color: #293017;" > &emsp;你好，{{ user.username }}.</span>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:logout' %}">注销</a>

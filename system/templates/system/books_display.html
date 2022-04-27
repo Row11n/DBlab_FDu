@@ -1,0 +1,14 @@
+{% extends "system/base.html" %}
+
+
+{% block content %}
+
+    <p>books</p>
+    <ul>
+        {% for book in books %}
+            <li> {{book.ISBN}} - {{book}} </li>
+        {% endfor %}
+    
+    </ul>
+
+{% endblock content %}

@@ -1,6 +1,8 @@
 from django.forms import Form
 from django.forms import fields
 from django.core.exceptions import ValidationError
+from django import forms
+
 class RegisterForm(Form):
     username = fields.CharField(
         required=True,
@@ -59,6 +61,7 @@ class LoginForm(Form):
     )
     password = fields.CharField(
         required=True,
+        widget=forms.PasswordInput,
         error_messages={
             "required":"密码不可以空",
         }

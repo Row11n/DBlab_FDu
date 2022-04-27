@@ -34,10 +34,12 @@ INSTALLED_APPS = [
     'system',
     'users',
     'Userinfo',
+
+    #第三方apps
     'imagekit',
+    'bootstrap4',
 
-
-    #默认app
+    #默认apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

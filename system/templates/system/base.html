@@ -1,13 +1,62 @@
-<p>----------------请先假装这里有一个导航bar----------------
-    {% if user.is_authenticated %}
-        你好，{{ user.username }}。<img class="avatar" src = "{{user.avatar.url}}" alt="{{user.username}}" style="width:50px"></img>
-        <a href="{% url 'users:logout' %}">注销</a>
-    {% else %}
-    <a href="{% url 'Userinfo:login' %}">请登录</a>
-    {% endif %}
-    -<a href="{% url 'Userinfo:register' %}">注册</a>
-</p>
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>图书销售管理系统</title>
 
-{% block content %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+</head>
 
-{% endblock content %}
+<body>
+    <nav class="navbar navbar-expand-md navbar-light mb-4 border" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="{% url 'system:home' %}">BSMS</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse"  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span></button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'system:home' %}">主页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'system:books' %}">书库</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse"> 
+            <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <img class="mb border" src = "{{user.avatar.url}}" alt="{{user.username}}" style="width:50px"></img>
+                </li>
+                <li class="nav-item">
+                    <span class="navbar-brand"> &emsp;你好，{{ user.username }}.</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:logout' %}">注销</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Userinfo:login' %}">登录</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Userinfo:register' %}">注册</a>
+                </li>
+            {% endif %}
+            </ul>
+        </div> 
+    </nav>
+
+    {% block content %}
+
+    {% endblock content %}
+
+</body>
+
+

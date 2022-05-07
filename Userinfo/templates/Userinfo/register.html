@@ -1,13 +1,37 @@
 {% extends "system/base.html" %}
 
 {% block content %}
-
-    <form method="post" action="{% url 'Userinfo:register' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-
-        <button name="submit">注册</button>
-        <input type="hidden" name="next" value="{% url 'system:home' %}"/>
-    </form>
-
+    <div class="wrapper">
+        <div class="header">
+            <div class="top">
+                <div class="logo">
+                    <img src="/static/images/Fudan_University.png" alt="#" style="width: 75px;">
+                </div>
+                <div class="form">
+                    <form method="post" action="{% url 'Userinfo:register' %}">
+                    {% csrf_token %}
+                    <div class="input_field">
+                        <input type="text" name="username" placeholder="用户名" class="input">
+                    </div>
+                    <div class="input_field">
+                        <input type="password" name="password1" placeholder="密码" class="input">
+                    </div>
+                    <div class="input_field">
+                        <input type="password" name="password2" placeholder="确认密码" class="input">
+                    </div>
+                    <div class="input_field">
+                        <input type="text" name="email" placeholder="邮箱" class="input">
+                    </div>
+                    <div class="input_field">
+                        <input type="text" name="uid" placeholder="工号（只能10位）" class="input">
+                    </div>
+                    {% if error_msg %}
+                    <p class="warning">{{ error_msg }}</p>
+                    {% endif %}
+                    <input type="submit" value="注册" class="button">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

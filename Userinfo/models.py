@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUse
 from django.db import models
 from datetime import date
 
-
 class UserManager(BaseUserManager):
     def _create_user(self,username,password,email,uid,**kwargs):
         if not username:
@@ -25,12 +24,13 @@ class UserManager(BaseUserManager):
         kwargs['is_staff'] = True
         return self._create_user(username,password,email,uid,**kwargs)
 
-class User(AbstractBaseUser,PermissionsMixin): # 继承AbstractBaseUser，PermissionsMixin
+class User(AbstractBaseUser,PermissionsMixin): 
     GENDER_TYPE = (
         ("1","男"),
         ("2","女")
     )
-    uid = models.CharField(max_length=10,primary_key=True,verbose_name="工号")
+    id = models.AutoField(primary_key=True) 
+    uid = models.CharField(max_length=10,unique=True,verbose_name="工号")
     username = models.CharField(max_length=15,verbose_name="用户名",unique=True)
     realname = models.CharField(max_length=13,verbose_name="真实姓名",null=True,blank=True)
     gender = models.CharField(max_length=2,choices=GENDER_TYPE,verbose_name="性别",null=True,blank=True)
@@ -41,7 +41,7 @@ class User(AbstractBaseUser,PermissionsMixin): # 继承AbstractBaseUser，Permis
     is_active = models.BooleanField(default=True,verbose_name="激活状态")
     is_staff = models.BooleanField(default=True,verbose_name="是否是员工")
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'uid']
+    REQUIRED_FIELDS = ['email','uid']
     EMAIL_FIELD = 'email'
     objects = UserManager()
     def get_full_name(self):

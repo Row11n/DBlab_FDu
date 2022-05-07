@@ -1,0 +1,89 @@
+{% extends "system/base.html" %}
+
+
+{% block content %}
+
+<div class="container p-4 offset-6-lg" style="display:flex">
+    <a href="{% url 'system:books' %}">返回</a>
+</div>
+
+<form action="{% url 'system:info_detail' book_info.id %}" method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-sm-4">属性</th>
+                        <th class="col-sm-4">信息</th>
+                        <th class="col-sm-4">编辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">ISBN</td>
+                        <td>{{ book_info.ISBN }}</td>
+                        <td>
+                            <div class="input_field">
+                                <input type="text" name="ISBN" value="{{ book_info.ISBN }}"  > 
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">书籍名称</td>
+                        <td>{{ book_info.name }}</td>
+                        <td>
+                            <input type="text" name="name" value="{{ book_info.name }}" class="input_field"> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">作者</td>
+                        <td>{{ book_info.author }}</td>
+                        <td>
+                            <input type="text" name="author" value="{{ book_info.author }}" class="input_field">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">出版社</td>
+                        <td>{{ book_info.publisher }}</td>
+                        <td>
+                            <input type="text" name="publisher" value="{{ book_info.publisher }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">价格</td>
+                        <td>{{ book_info.price}}</td>
+                        <td>
+                            <input type="text" name="price" value="{{ book_info.price}}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">库存</td>
+                        <td>{{ book_info.amount }}</td>
+                        <td>
+                            <input type="text" name="amount" value="{{ book_info.amount }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">是否上架</td>
+                        <td>{{ book_info.is_active }}</td>
+                        <td>
+                            <input type="text" name="is_active" value="{{ book_info.is_active }}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-2">
+                <input type="submit" value="修改" class="button2">
+            </div>
+            {% if error_msg %}
+            <p class="warning">{{ error_msg }}</p>
+            {% endif %}
+            </div>
+        </div>
+</form>
+
+{% endblock content %}

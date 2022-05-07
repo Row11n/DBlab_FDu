@@ -1,0 +1,33 @@
+{% extends "system/base.html" %}
+{% load bootstrap4 %}   
+{% block content %}
+
+<div class="container p-4 center">
+    <form name="sr" class="form-inline mt-2 mt-md-0" action="{% url 'system:stock' %}" method="get">
+        {% csrf_token %}
+       <input class="form-control mr-sm-2" type="text" id="ISBN" placeholder="搜索库中ISBN" aria-label="Search" name="search_ISBN" >
+       <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="搜索"></input>     
+    </form>
+</div>
+
+{% for book in books_list %}
+   {% empty %}
+   <div class="container p-4 offset-6-lg" style="display:flex">
+    <p>库中暂无</p>
+    <a href="{% url 'system:new_book' %}" class="btn btn-primary" style="margin-left:20px">新建图书</a> 
+   </div>
+{% endfor %}
+
+<form action="{% url 'system:stock' %}" method="post" class="form">
+    {% csrf_token %}
+    <div style=" padding: 20px 30px; display: flex; justify-content: space-evenly;">
+    {% bootstrap_form form %}
+    </div>
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    {% buttons %}
+    <button name="submit" class="btn btn-primary" style="margin-left:250px;">创建</button>
+    {% endbuttons %}
+</form>
+
+
+{% endblock content %}

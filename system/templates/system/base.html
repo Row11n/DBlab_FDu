@@ -8,54 +8,77 @@
 
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
+    <link rel="stylesheet" href="/static/css/navbar2.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <script src="js/jquery.min.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light mb-4 border" style="background-color: #99AFC6;">
-        <a class="navbar-brand" style="color: #0F0B0C;font-weight: bolder;font-family: Conolas;" href="{% url 'system:home' %}">BSMS</a>
 
+    <nav class="navbar navbar-expand-md navbar-light border">
+        <ul class="nav__links" style="margin-left: 0px;">
+            <li class="logo">
+                <a href="{% url 'system:home' %}" style="text-decoration: none; color: black;font-family: 'Ma Shan Zheng', cursive;" ><strong>BookShop</strong>|cyt</a>
+            </li>
+        </ul>           
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse"  aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span></button>
-
+        aria-controls="navbarCollapse"  aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="width:10px;"></span></button>
+            
         <div class="collapse navbar-collapse" style="color: #86A4BE;" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'system:home' %}">主页</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'system:books' %}">书库</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="collapse navbar-collapse" style="color: #86A4BE;" id="navbarCollapse"> 
-            <ul class="navbar-nav ml-auto">
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <img class="mb border" src = "{{user.avatar.url}}" alt="{{user.username}}" style="width:40px; height: 40px;"></img>
-                </li>
-                <li class="nav-item">
-                    <span class="navbar-brand" style="color: #293017;" > &emsp;你好，{{ user.username }}.</span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:logout' %}">注销</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Userinfo:login' %}">登录</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Userinfo:register' %}">注册</a>
-                </li>
+        <ul class="nav__links ml-auto">
+        {% if user.is_authenticated %}
+            
+            <li>
+                <a href="{% url 'system:bookshop' %}" style="text-decoration: none;">书城</a>
+            </li>
+            {% if user.is_staff %}
+            <li>
+                <a href="{% url 'system:books' %}" style="text-decoration: none;">书库</a>
+            </li>
+            <li>
+                <a href="{% url 'system:stockbills' %}" style="text-decoration: none;">货单</a>
+            </li>
+            <li>
+                <a href="{% url 'system:finance' %}" style="text-decoration: none;">财务</a>
+            </li>
             {% endif %}
-            </ul>
-        </div> 
-    </nav>
+                
 
+            <li class="logo">
+                <a href="#" style="text-decoration: none;">你好，{{ user.username }}.&emsp;</a>
+            </li>
+            <img class="mb border" src = "{{user.avatar.url}}" alt="{{user.username}}" style="width:35px; height: 35px;"> &nbsp;</img>
+            <li>
+                <a href="{% url 'Userinfo:logout' %}" style="text-decoration: none;">注销</a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{% url 'Userinfo:login' %}" style="text-decoration: none;">登录</a>
+            </li>
+            <li>
+                <a href="{% url 'Userinfo:register' %}" style="text-decoration: none;">注册</a>
+            </li>
+        {% endif %}
+        </ul>
+        </div>
+    </nav>
+    
     {% block content %}
 
     {% endblock content %}
+    <div class="wrapper">
+        <div class="footer">
+            <div class="links">
+                <ul>
+                    <li><a href="#">ABOUT US</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                © 2022 |  By cyt
+            </div>
+        </div>
+    </div>
 
 </body>
 

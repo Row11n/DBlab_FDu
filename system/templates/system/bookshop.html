@@ -26,8 +26,6 @@
                 <th scope="col"><span class="lead font-weight-bold">作者</span></th>
                 <th scope="col"><span class="lead font-weight-bold">零售价格</span></th>
                 <th scope="col"><span class="lead font-weight-bold">库存数量</span></th>
-                <th scope="col"><span class="lead font-weight-bold">是否活跃</span></th>
-                <th scope="col"><span class="lead font-weight-bold"></span></th>
             </tr>
         </thead>
         <tbody>
@@ -39,12 +37,6 @@
                 <td>{{ book.author }}</td>
                 <td>{{ book.price }}</td>
                 <td>{{ book.amount }}</td>
-                <td>{{ book.is_active }}</td>
-                <td>
-                    <a href="{% url 'system:info_detail' book.id %}" class="btn btn-outline-primary">
-                        编辑
-                    </a>
-                </td>
             </tr>
             {% endfor %}
         </tbody>

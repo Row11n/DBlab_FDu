@@ -1,0 +1,85 @@
+{% extends "system/base.html" %}
+
+
+{% block content %}
+
+<div class="container p-4 ">
+    <a href="{% url 'system:stock' %}" class="btn btn-primary">进货</a>
+</div>
+<div class="tab-content">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th scope="col"><span class="lead font-weight-bold">书籍名称</span></th>
+                <th scope="col"><span class="lead font-weight-bold">操作用户</span></th>
+                <th scope="col"><span class="lead font-weight-bold">单价</span></th>
+                <th scope="col"><span class="lead font-weight-bold">进货数量</span></th>
+                <th scope="col"><span class="lead font-weight-bold">总价</span></th>
+                <th scope="col"><span class="lead font-weight-bold">状态</span></th>
+                <th scope="col"><span class="lead font-weight-bold">操作</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills_list %}
+            <tr style="vertical-align: middle;">
+                <td>{{ bill.book.name }}</td>
+                <td>{{ bill.user.username }}</td>
+                <td>{{ bill.price }}</td>
+                <td>{{ bill.amount }}</td>
+                <td>{{ bill.totalprice }}</td>
+                <td>{{ bill.getstatus }}</td>
+                {% if bill.status == "1" %}
+                    <td>
+                        <div style="display:flex; margin-right:auto;justify-content : center;">
+                        <form action="{% url 'system:stockbills' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="pay" id="pay" value="1"></input>
+                            <input type="hidden" name="send_back" value="0"></input>
+                            <input type="hidden" name="arrival" value="0"></input>
+                            <input type="hidden" name="bill_id" value="{{ bill.id }}"></input>
+                            <button class="btn btn-outline-success my-2 my-sm-0" name="submit">付款  </button>
+                        </form>
+
+                        <form action="{% url 'system:stockbills' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="pay" id="pay" value="0"></input>
+                            <input type="hidden" name="send_back" value="1"></input>
+                            <input type="hidden" name="arrival" value="0"></input>
+                            <input type="hidden" name="bill_id" value="{{ bill.id }}"></input>
+                            <button class="btn btn-outline-success my-2 my-sm-0" name="submit">退货  </button>
+                        </form>
+                        </div>
+                    </td>
+                {% endif %}
+                {% if bill.status == "2" %}
+                <td>
+                <form action="{% url 'system:stockbills' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="pay" id="pay" value="0"></input>
+                    <input type="hidden" name="send_back" value="0"></input>
+                    <input type="hidden" name="arrival" value="1"></input>
+                    <input type="hidden" name="bill_id" value="{{ bill.id }}"></input>
+                    <button class="btn btn-outline-success my-2 my-sm-0" name="submit">货到了  </button>
+                </form>
+                </td>
+                {% endif %}
+
+                {% if bill.status == "4" %}
+                <td>
+                <form action="{% url 'system:stockbills' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="pay" id="pay" value="0"></input>
+                    <input type="hidden" name="send_back" value="0"></input>
+                    <input type="hidden" name="arrival" value="0"></input>
+                    <input type="hidden" name="bill_id" value="{{ bill.id }}"></input>
+                    <button class="btn btn-outline-success my-2 my-sm-0" name="submit">入库  </button>
+                </form>
+                </td>
+                {% endif %}
+            
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

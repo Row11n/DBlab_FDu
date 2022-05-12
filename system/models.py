@@ -48,6 +48,7 @@ class Guest_bill(Bill):
     STATUS_TYPE = (
         ("1","未付款"),
         ("2","已付款"),
+        ("3","已退回"),
     )
     status = models.CharField(max_length=2, choices=STATUS_TYPE, verbose_name="状态", default="1")
     def getstatus(self):
@@ -73,8 +74,20 @@ class Finance(models.Model):
     @property
     def income(self):
         if self.is_stock == 1:
+            return str(-(self.bill.totalprice))
+        else:
+            return "+" + str(self.bill.totalprice)
+
+    @property
+    def income_int(self):
+        if self.is_stock == 1:
             return -(self.bill.totalprice)
         else:
             return self.bill.totalprice
+
+    @property
+    def getdate(self):
+        return self.date.date()
+
 
     

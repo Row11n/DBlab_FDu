@@ -10,6 +10,7 @@
     <table class="table table-hover text-center">
         <thead>
             <tr>
+                <th scope="col"><span class="lead font-weight-bold">货单时间</span></th>
                 <th scope="col"><span class="lead font-weight-bold">书籍名称</span></th>
                 <th scope="col"><span class="lead font-weight-bold">操作用户</span></th>
                 <th scope="col"><span class="lead font-weight-bold">单价</span></th>
@@ -22,6 +23,7 @@
         <tbody>
             {% for bill in bills_list %}
             <tr style="vertical-align: middle;">
+                <td>{{ bill.date }}</td>
                 <td>{{ bill.book.name }}</td>
                 <td>{{ bill.user.username }}</td>
                 <td>{{ bill.price }}</td>

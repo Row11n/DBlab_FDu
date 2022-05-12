@@ -5,14 +5,13 @@
         <div class="header">
             <div class="top">
                 <div class="logo">
-                    <img src="/static/images/Fudan_University.png" alt="#" style="width: 75px;">
+                    <img src="/static/images/Fudan.png" alt="#" style="width: 75px;">
                 </div>
                 <div class="form">
                     <form method="post" action="{% url 'Userinfo:login' %}">
                     {% csrf_token %}
                     <div class="input_field">
                         <input type="text" name="username" placeholder="用户名" required autofocus>
-                    <p>{{ form.errors.username.0 }}</p>
                     </div>
                     <div class="input_field">
                         <input type="password" name="password" placeholder="密码" required>

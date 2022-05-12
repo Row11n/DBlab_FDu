@@ -1,0 +1,65 @@
+{% extends "system/base.html" %}
+
+
+{% block content %}
+
+
+
+<form action="{% url 'system:new_book' %}" method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-sm-4">属性</th>
+                        <th class="col-sm-4">编辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">ISBN</td>
+                        <td>
+                            <div class="input_field">
+                                <input type="text" name="ISBN" value="{{ book_info.ISBN }}"  > 
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">书籍名称</td>
+                        <td>
+                            <input type="text" name="name" value="{{ book_info.name }}" class="input_field"> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">作者</td>
+                        <td>
+                            <input type="text" name="author" value="{{ book_info.author }}" class="input_field">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">出版社</td>
+                        <td>
+                            <input type="text" name="publisher" value="{{ book_info.publisher }}">
+                        </td>
+                    </tr>
+                    <input type="hidden" name="price" value="0" >
+                    <input type="hidden" name="amount" value="0">
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-2">
+                <input type="submit" value="新建" class="btn btn-outline-success">
+                <a href="{% url 'system:stock' %}" class="btn btn-outline-success">返回</a>
+
+            </div>
+            {% if error_msg %}
+            <p class="warning">{{ error_msg }}</p>
+            {% endif %}
+            </div>
+        </div>
+</form>
+
+{% endblock content %}

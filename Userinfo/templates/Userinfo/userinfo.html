@@ -1,0 +1,224 @@
+{% extends "system/base.html" %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <br>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" style="height:50px">
+            <a class="nav-link active" data-toggle="tab" href="#my_barket">购物车车</a>
+        </li>
+        <li class="nav-item" style="height:50px">
+            <a class="nav-link" data-toggle="tab" href="#my_info">个人资料</a>
+        </li>
+        
+        
+        {% if user.is_superuser %}
+        <li class="nav-item" style="height:50px">
+            <a class="nav-link" data-toggle="tab" href="#management">用户管理</a>
+        </li>
+        {% endif %}
+            
+       
+    </ul>
+  
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="my_barket" class="container tab-pane active"><br>
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="lead font-weight-bold">书籍名称</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">单价</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">购买数量</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">总价</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">订单时间</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">状态</span></th>
+                        <th scope="col"><span class="lead font-weight-bold"></span></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bill in bill_list %}
+                    <tr style="vertical-align: middle;">
+                        <td>{{ bill.book.name }}</td>
+                        <td>{{ bill.price }}</td>
+                        <td>{{ bill.amount }}</td>
+                        <td>{{ bill.totalprice }}</td>
+                        <td>{{ bill.date }}</td>
+                        <td>{{ bill.getstatus }}</td>
+                        <td>
+                            {% if bill.status == "1" %}
+                            <div style="display:flex; margin-right:auto;justify-content : center;">
+                            <form action="{% url 'Userinfo:userinfo' user.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="pay" id="pay" value="1"></input>
+                                <input type="hidden" name="bill_id"  value="{{bill.id}}"></input>
+                                <button class="btn btn-outline-success my-2 my-sm-0" name="submit">付款  </button>
+                            </form>
+                            <form action="{% url 'Userinfo:userinfo' user.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="send_back" value="1"></input>
+                                <input type="hidden" name="bill_id"  value="{{bill.id}}"></input>
+                                <button class="btn btn-outline-success my-2 my-sm-0" name="submit">退回  </button>
+                            </form>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="my_info" class="container tab-pane fade"><br>
+            <!-- this form is for submitting the change information -->
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
+                        <img  src="{{user.avatar.url}}" class="img-fluid img-thumbnail " style="width: 120px;">
+                    </div>
+                </div>  
+            </div>
+            <form action="{% url 'Userinfo:userinfo' user.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="row mt-5">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-4">属性</th>
+                                    <th class="col-sm-4">信息</th>
+                                    <th class="col-sm-4">编辑</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td scope="row">头像</td>
+                                    <td>{{ user.avatar }}</td>
+                                    <td>
+                                        <input type="file" name="avatar" value="{{ user.avatar.url }}" class="input_field"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">工号</td>
+                                    <td>{{ user.uid }}</td>
+                                    <td>
+                                        <input type="text" name="uid" value="{{ user.uid }}" class="input_field"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">真实姓名</td>
+                                    <td>{{ user.realname }}</td>
+                                    <td>
+                                        <input type="text" name="realname" value="{{ user.realname }}" class="input_field">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">性别</td>
+                                    <td>{{ user.getgender }}</td>
+                                    <td>
+                                        {% if user.gender == "1" %}
+                                        <input type="radio" name="gender" value="1" checked/>男
+                                        <input type="radio" name="gender" value="2"/>女
+                                        {% endif %}     
+                                        {% if user.gender == "2" %}
+                                        <input type="radio" name="gender" value="1" />男
+                                        <input type="radio" name="gender" value="2"checked  />女
+                                        {% endif %}   
+                                        {% if user.gender != "2" %}
+                                        {% if user.gender != "1" %}
+                                        <input type="radio" name="gender" value="1" />男
+                                        <input type="radio" name="gender" value="2"checked  />女
+                                        {% endif %}  
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">电话</td>
+                                    <td>{{ user.phone }}</td>
+                                    <td>
+                                        <input type="text" name="phone" value="{{ user.phone }}" style="height=40px;">
+                                    </td>
+                                </tr><tr>
+                                    <td scope="row">邮箱</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        <input type="text" name="email" value="{{ user.email }}" style="height=40px;">
+                                    </td>
+                                </tr></tr><tr>
+                                    <td scope="row">出生年月</td>
+                                    <td>{{ user.getbirth }}</td>
+                                    <td>
+                                        <input type="date" name="birthday" value="{{ user.getbirth }}" style="height=40px;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8"></div>
+                        <div class="col-sm-2">
+                            <input type="submit" value="修改" class="btn btn-outline-success" style="width: 150px; height: 40px;">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="management" class="container tab-pane fade"><br>
+            <div class="container p-2" style="display: center;">
+                <a href="{% url 'Userinfo:register_for_staff' %}" class="btn btn-primary">创建用户</a>
+            </div>
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="lead font-weight-bold">用户名</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">工号</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">真实姓名</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">性别</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">手机号码</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">邮箱</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">年龄</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">是否为管理员</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in user_list %}
+                    <tr style="vertical-align: middle;">
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.uid }}</td>
+                        <td>{{ user.realname }}</td>
+                        <td>{{ user.getgender }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.age }}</td>
+                        <td>{{ user.is_staff }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        var round_image_width = $("#showimg").width();
+        var round_image_height = $("#showimg").height();
+
+        if (round_image_height > round_image_width) {
+            $("#showimg").css('height', round_image_width);
+            $("#showimg").css('width', round_image_width);
+            $("#showimg").css('object-fit', 'cover');
+            // right top is the (0,0)
+            $("#showimg").css('object-position', '0 0');
+        } else {
+            $("#showimg").css('width', round_image_height);
+            $("#showimg").css('height', round_image_height);
+            $("#showimg").css('object-fit', 'cover');
+        }
+    });
+</script>
+{% endblock script %}

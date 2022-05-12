@@ -11,8 +11,7 @@
        <input class="form-control mr-sm-2" type="text" id="author" placeholder="作者" aria-label="Search" name="search_author" value={{author}}>
        <input class="form-control mr-sm-2" type="text" id="publisher" placeholder="出版社" aria-label="Search" name="search_publisher" value={{publisher}}>
        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="搜索"></input>
-       <button class="btn btn-outline-success my-2 my-sm-0" onclick="reset2()">重置   </button>
-       <a href="{% url 'system:new_book' %}" class="btn btn-primary" style="margin-left:20px">新建图书</a>       
+       <button class="btn btn-outline-success my-2 my-sm-0" onclick="reset2()">重置   </button>  
     </form>
 </div>
 
@@ -26,6 +25,7 @@
                 <th scope="col"><span class="lead font-weight-bold">作者</span></th>
                 <th scope="col"><span class="lead font-weight-bold">零售价格</span></th>
                 <th scope="col"><span class="lead font-weight-bold">库存数量</span></th>
+                <th scope="col"><span class="lead font-weight-bold">操作</span></th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +37,21 @@
                 <td>{{ book.author }}</td>
                 <td>{{ book.price }}</td>
                 <td>{{ book.amount }}</td>
+                <td>
+                    <form action="{% url 'system:bookshop' %}" method="post">
+                        {% csrf_token %}
+                    <input type="text" name="amount" placeholder="购买数量" style="width: 60px;">
+                    <input type="hidden" name="book_ISBN" value="{{ book.ISBN }}">
+                    <input type="hidden" name="price" value="{{ book.price }}">
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <input class="btn btn-outline-success" type="submit" value="加入购物车" style="width: 120px;"></input>
+                    <br/>
+                    {% if error_msg and book.ISBN == wrong_ISBN %}
+                        {{error_msg}}
+                    {% endif %}
+                        
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

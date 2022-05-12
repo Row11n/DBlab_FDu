@@ -2,6 +2,10 @@ from django.forms import Form
 from django.forms import fields
 from django.core.exceptions import ValidationError
 from django import forms
+from django.contrib.auth.forms import(
+    ReadOnlyPasswordHashField, AuthenticationForm
+)
+from .models import *
 
 class RegisterForm(Form):
     username = fields.CharField(
@@ -31,14 +35,6 @@ class RegisterForm(Form):
             "required":"邮箱不可以为空！"
         },
     )
-    uid = fields.CharField(
-        max_length=10,
-        min_length=10,
-        error_messages={
-            "min_length": "工号必须为10位！",
-            "max_length": "工号必须为10位！"
-        }
-    )
 
     def clean_password2(self):
         if not self.errors.get("password1"):
@@ -66,3 +62,12 @@ class LoginForm(Form):
             "required":"密码不可以空",
         }
     )
+
+
+class UserChangeForm(forms.ModelForm):
+    password = ReadOnlyPasswordHashField()
+
+    class Meta:
+        model = User
+        fields = ('avatar','uid', 'realname', 'gender','phone',
+                    'email', 'birthday')

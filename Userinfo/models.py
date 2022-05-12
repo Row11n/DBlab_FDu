@@ -18,6 +18,11 @@ class UserManager(BaseUserManager):
         return user
     def create_user(self,username,password,email,uid,**kwargs):
         kwargs['is_superuser'] = False
+        kwargs['is_staff'] = False
+        return self._create_user(username,password,email,uid,**kwargs)
+    def create_user_staff(self,username,password,email,uid,**kwargs):
+        kwargs['is_superuser'] = False
+        kwargs['is_staff'] = True
         return self._create_user(username,password,email,uid,**kwargs)
     def create_superuser(self,username,password,email,uid,**kwargs):
         kwargs['is_superuser'] = True
@@ -50,11 +55,18 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.username
         
     @property
-    def 年龄(self):
+    def age(self):
         delta_days = date.today() - self.birthday
         class Meta:
             verbose_name = "年龄"
         return int(delta_days.days / 365)
+    
+    @property
+    def getgender(self):
+        return self.get_gender_display()
+
+    def getbirth(self):
+        return str(self.birthday)
 
     class Meta:
         verbose_name = "用户"

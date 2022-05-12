@@ -8,7 +8,7 @@
 
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
-    <link rel="stylesheet" href="/static/css/navbar2.css">
+    <link rel="stylesheet" href="/static/css/navbar.css">
     <link rel="stylesheet" href="/static/css/login.css">
     <script src="js/jquery.min.js"></script>
 </head>
@@ -46,7 +46,7 @@
                 
 
             <li class="logo">
-                <a href="#" style="text-decoration: none;">你好，{{ user.username }}.&emsp;</a>
+                <a href="{% url 'Userinfo:userinfo' user.id %}" style="text-decoration: none;">你好，{{ user.username }}.&emsp;</a>
             </li>
             <img class="mb border" src = "{{user.avatar.url}}" alt="{{user.username}}" style="width:35px; height: 35px;"> &nbsp;</img>
             <li>
@@ -71,7 +71,7 @@
         <div class="footer">
             <div class="links">
                 <ul>
-                    <li><a href="#">ABOUT US</a></li>
+                    <li><a href="{% url 'system:about' %}">ABOUT</a></li>
                 </ul>
             </div>
             <div class="copyright">

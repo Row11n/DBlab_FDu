@@ -2,9 +2,8 @@
 
 
 {% block content %}
-<div class="container p-4 offset-6-lg" style="display:flex">
-<a href="{% url 'system:books' %}">返回</a>
-</div>
+
+
 
 <form action="{% url 'system:new_book' %}" method="post">
     {% csrf_token %}
@@ -44,25 +43,17 @@
                             <input type="text" name="publisher" value="{{ book_info.publisher }}">
                         </td>
                     </tr>
-                    <tr>
-                        <td scope="row">价格</td>
-                        <td>
-                            <input type="text" name="price" value="{{ book_info.price}}" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row">库存</td>
-                        <td>
-                            <input type="text" name="amount" value="{{ book_info.amount }}">
-                        </td>
-                    </tr>
+                    <input type="hidden" name="price" value="0" >
+                    <input type="hidden" name="amount" value="0">
                 </tbody>
             </table>
         </div>
         <div class="row">
-            <div class="col-sm-8"></div>
+            <div class="col-sm-6"></div>
             <div class="col-sm-2">
-                <input type="submit" value="新建" class="button2">
+                <input type="submit" value="新建" class="btn btn-outline-success">
+                <a href="{% url 'system:books' %}" class="btn btn-outline-success">返回</a>
+
             </div>
             {% if error_msg %}
             <p class="warning">{{ error_msg }}</p>

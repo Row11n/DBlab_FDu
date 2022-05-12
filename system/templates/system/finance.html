@@ -3,7 +3,32 @@
 
 {% block content %}
 
+<div class="container p-4 offset-6-lg" style="display:flex;">
+    <form name="sr" class="form-inline mt-2 mt-md-0" action="{% url 'system:finance' %}" method="get">
+        {% csrf_token %}
+       <input class="form-control mr-sm-2" type="date" id="start" placeholder="起始时间" aria-label="Search" name="search_start" value={{start}}>
+       <input class="form-control mr-sm-2" type="date" id="end" placeholder="终止时间" aria-label="Search" name="search_end" value={{end}}>
+       <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="搜索"></input>
+    </form>
+</div>
+
 <div class="tab-content">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th scope="col"><span class="lead font-weight-bold">总支出(￥)</span></th>
+                <th scope="col"><span class="lead font-weight-bold">总收入(￥)</span></th>
+                <th scope="col"><span class="lead font-weight-bold">总利润(￥)</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="vertical-align: middle;">
+                <td>{{ out_ }}</td>
+                <td>{{ in_ }}</td>
+                <td>{{ profit }}</td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-hover text-center">
         <thead>
             <tr>
@@ -25,4 +50,5 @@
         </tbody>
     </table>
 </div>
+
 {% endblock content %}

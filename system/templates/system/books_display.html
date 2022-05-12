@@ -12,7 +12,7 @@
        <input class="form-control mr-sm-2" type="text" id="publisher" placeholder="出版社" aria-label="Search" name="search_publisher" value={{publisher}}>
        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="搜索"></input>
        <button class="btn btn-outline-success my-2 my-sm-0" onclick="reset2()">重置   </button>
-       <a href="{% url 'system:new_book' %}" class="btn btn-primary" style="margin-left:20px">新建图书</a>       
+       <a href="{% url 'system:new_book' %}" class="btn btn-primary" style="margin-left:20px">新建图书</a>
     </form>
 </div>
 
@@ -26,8 +26,8 @@
                 <th scope="col"><span class="lead font-weight-bold">作者</span></th>
                 <th scope="col"><span class="lead font-weight-bold">零售价格</span></th>
                 <th scope="col"><span class="lead font-weight-bold">库存数量</span></th>
-                <th scope="col"><span class="lead font-weight-bold">是否活跃</span></th>
-                <th scope="col"><span class="lead font-weight-bold"></span></th>
+                <th scope="col"><span class="lead font-weight-bold">是否上架</span></th>
+                <th scope="col"><span class="lead font-weight-bold"><a href="{% url 'system:stock' %}" class="btn btn-outline-success" style="width: 150px;">进货</a></span></th>
             </tr>
         </thead>
         <tbody>
@@ -41,9 +41,34 @@
                 <td>{{ book.amount }}</td>
                 <td>{{ book.is_active }}</td>
                 <td>
-                    <a href="{% url 'system:info_detail' book.id %}" class="btn btn-outline-primary">
+                    <div style="display:flex; margin-right:auto;justify-content : center;">
+                    {% if not book.is_active %}
+                    <form action="{% url 'system:books' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="activate" value="1"></input>
+                        <label for="1">设置售价</label>
+                        <input type="text" name="price" value="{{ book.price }}"  id="1" style="width:60px"></input>
+                        <input type="hidden" name="ISBN" value="{{ book.ISBN }}"></input>
+                        <button class="btn btn-outline-success my-2 my-sm-0" name="submit">上架  </button>
+                    </form>
+                    {% endif %}
+                    {% if book.is_active %}
+                    <form action="{% url 'system:books' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="deactivate" value="1"></input>
+                        <input type="hidden" name="ISBN" value="{{ book.ISBN }}"></input>
+                        <button class="btn btn-outline-success my-2 my-sm-0" name="submit">下架  </button>
+                    </form>
+                    {% endif %}
+                    <a href="{% url 'system:info_detail' book.id %}" class="btn btn-outline-success">
                         编辑
                     </a>
+                </div>
+                    {% if error_msg and wrong_ISBN == book.ISBN %}
+                        {{error_msg}}
+                    {% endif %}
+                    
+                
                 </td>
             </tr>
             {% endfor %}

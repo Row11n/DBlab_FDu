@@ -104,7 +104,7 @@
                                     <td scope="row">工号</td>
                                     <td>{{ user.uid }}</td>
                                     <td>
-                                        <input type="text" name="uid" value="{{ user.uid }}" class="input_field"> 
+                                        <input type="hidden" name="uid" value="{{ user.uid }}" class="input_field"> 
                                     </td>
                                 </tr>
                                 <tr>
@@ -146,11 +146,19 @@
                                     <td>
                                         <input type="text" name="email" value="{{ user.email }}" style="height=40px;">
                                     </td>
-                                </tr></tr><tr>
+                                </tr></tr>
+                                <tr>
                                     <td scope="row">出生年月</td>
                                     <td>{{ user.getbirth }}</td>
                                     <td>
                                         <input type="date" name="birthday" value="{{ user.getbirth }}" style="height=40px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">年龄</td>
+                                    <td>{{ user.age }}</td>
+                                    <td>
+                                        <input type="hidden">
                                     </td>
                                 </tr>
                             </tbody>

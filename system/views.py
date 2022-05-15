@@ -25,7 +25,7 @@ class BooksView(View):
         srch_name = request.GET.get('search_name')
         srch_publisher = request.GET.get('search_publisher')
         srch_author = request.GET.get('search_author')
-        books = Book_info.objects.all()
+        books = Book_info.objects.all() #获取所有图书
         if srch_ISBN is None:
             srch_ISBN = ''
         if srch_name is None:
@@ -129,9 +129,7 @@ class InfoDetailView(View):
 
     def post(self, request, book_id):
         book_info = Book_info.objects.filter(id=book_id).first()
-        form = BookInfoForm(instance=book_info,data=request.POST)
-        
-        
+        form = BookInfoForm(instance=book_info,data=request.POST) 
         if form.is_valid():
             print(form) 
             form.save()
@@ -149,7 +147,7 @@ class StockBillsView(View):
         if(request.user.is_staff == False):
             raise Http404
         form = StockStatusForm()
-        bills_list = list(Stock_bill.objects.all().order_by('-date'))
+        bills_list = list(Stock_bill.objects.all().order_by('status'))
         return render(request, 'system/stockbills.html', 
             context={'form':form,'bills_list':bills_list})
 
@@ -160,7 +158,7 @@ class StockBillsView(View):
         send_back = form.data.get('send_back')
         arrival = form.data.get('arrival')
         bill = Stock_bill.objects.get(id = bill_id)
-        bills_list = list(Stock_bill.objects.all().order_by('-date'))
+        bills_list = list(Stock_bill.objects.all().order_by('status'))
         print(bill.status)
         print(pay)
         if bill.status == "1" and pay == "1":
@@ -185,8 +183,6 @@ class StockBillsView(View):
             book.amount = book.amount + bill.amount
             book.save()
             bill.save()
-            
-
         return redirect('system:stockbills')
 
 @method_decorator(login_required(login_url='/Userinfo/login'), name='dispatch')

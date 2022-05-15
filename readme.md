@@ -1,5 +1,5 @@
 ## 此项目用于2022春季学期FDu数据库期中实验
-####所用django版本为4.0.4，python版本为3.8.10
+#### 所用django版本为4.0.4，python版本为3.8.10
 
 代码目录说明
 database_midlab

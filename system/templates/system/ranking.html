@@ -1,0 +1,47 @@
+{% extends "system/base.html" %}
+
+
+{% block content %}
+    
+<div class="tab-content">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th scope="col"><span class="lead font-weight-bold">书籍id</span></th>
+                <th scope="col"><span class="lead font-weight-bold">销量</span></th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in dynamics %}
+            <tr style="vertical-align: middle;">
+                <td>{{ book.book_id }}</td>
+                <td>{{ book.total_quantity}}</td>
+                
+               
+                <td>
+                    <form action="{% url 'system:bookshop' %}" method="post">
+                        {% csrf_token %}
+                    
+                    <input type="hidden" name="book_ISBN" value="{{ dynamics.amount }}">
+                    
+                    <br/>
+                  
+                        
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    function reset2()
+    {
+        $("#ISBN").val("");
+        $("#name").val("");
+        $("#author").val("");
+        $("#publisher").val("");
+    }
+</script>
+{% endblock content %}

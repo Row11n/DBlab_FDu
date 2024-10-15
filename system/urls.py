@@ -13,5 +13,7 @@ urlpatterns = [
     path('new_book_for_stock', views.NewBookForStockView.as_view(), name='new_book_for_stock'),
     path('finance', views.FinanceView.as_view(), name='finance'),
     path('bookshop', views.BookShopView.as_view(), name='bookshop'),
+    path('ranking', views.ranking, name='ranking'),
+    
     path('about', views.about, name='about'),
 ]

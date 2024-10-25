@@ -15,6 +15,12 @@ def home(request):
 def about(request):
     return render(request, 'system/about.html')  
 
+def ranking(request):
+    orders_with_total_quantity = Bill.objects.values('book_id').annotate(total_quantity=Sum('amount'))
+    print(orders_with_total_quantity)
+    return render(request, 'system/ranking.html', {'dynamics': orders_with_total_quantity})
+
+
 @method_decorator(login_required(login_url='/Userinfo/login'), name='dispatch')
 class BooksView(View):
     def get(self, request):

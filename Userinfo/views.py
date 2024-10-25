@@ -62,10 +62,11 @@ def register_for_staff(request):
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password1"]
             email = form.cleaned_data["email"]
-            user_for_uid = User.objects.order_by('-uid').first()
-            _uid = int(user_for_uid.uid) + 10000000001
-            __uid = str(_uid)[1:11]
-            uid = __uid
+            #user_for_uid = User.objects.order_by('-uid').first()
+            uid = random.randint(1000000, 9999999)
+            # _uid = int(user_for_uid.uid) + 10000000001
+            # __uid = str(_uid)[1:11]
+            # uid = __uid
 
             username_exists = User.objects.filter(username=username).exists()
             if username_exists:
